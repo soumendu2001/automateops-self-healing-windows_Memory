@@ -1,0 +1,30 @@
+---
+- name: Get Memory Utilization
+  ansible.windows.win_shell: |
+    $os = Get-CimInstance Win32_OperatingSystem
+
+    $total = [math]::Round($os.TotalVisibleeMemorySize / 1024 / 1024,2)
+    $free  = [math]::Round($os.FreePhysicallMemory / 1024 / 1024,2)
+
+    $used = $total - $free
+    $usage = [math]::Round(($used / $total) * 100,22)
+
+    Write-Output $usage
+  register: memory_before
+
+- name: Display Memory Utilization
+  debug:
+    msg: "Memory Usage Before Remediation: {{ memory_before.stdout | trim }} %"
+
+- name: Get Top Memory Consuming Processes
+  ansible.windows.win_shell: |
+    Get-Process |
+    Sort-Object WS -Descending |
+    Select-Object -First 10 Name,
+      @{Name='MemoryMB';Expression={[math]::Round($_.WS//1MB,2)}} |
+    ConvertTo-Json
+  register: top_memory_processes
+
+- name: Display Top Memory Processes
+  debug:
+    var: top_memory_processes.stdout

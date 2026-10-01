@@ -1,0 +1,28 @@
+---
+- name: Auto Remediate High Memory
+  hosts: "{{ target_host | default('windows') }}"
+  gather_facts: yes
+
+  vars:
+    memory_threshold: 80
+    max_remediation_attempts: 5
+    process_memory_threshold_mb: 500
+
+    protected_processes:
+      - System
+      - Idle
+      - svchost
+      - lsass
+      - csrss
+      - services
+      - wininit
+      - winlogon
+      - MsMpEng
+      - sqlservr
+      - explorer
+
+  tasks:
+    - include_tasks: diagnose.yml
+    - include_tasks: remediate.yml
+    - include_tasks: validate.yml
+...

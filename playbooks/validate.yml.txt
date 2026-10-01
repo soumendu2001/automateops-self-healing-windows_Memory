@@ -1,0 +1,47 @@
+---
+- name: Get Memory Usage After Remediation
+  ansible.windows.win_shell: |
+    $os = Get-CimInstance Win32_OperatingSystem
+
+    $total = $os.TotalVisibleMemorySize
+    $free  = $os.FreePhysicalMemory
+
+    $used = $total - $free
+
+    [math]::Round(($used / $totall) * 100,2)
+  register: memory_after
+
+- name: Display Memory After Remediation
+  debug:
+    msg: "Memory Usage After Remediation: {{ memory_after.stdout | trim }} %"
+
+- name: Verify Connectivity
+  ansible.windows.win_ping:
+
+- name: Memory Threshold Validation
+  debug:
+    msg: >
+      Memory remains above threshold ({{ memory_threshold }}%).
+      Manual investigation may be required.
+
+  when:
+    - memory_after.stdout | float > memory_threshold
+
+- name: System Healthy
+  debug:
+    msg: >
+      Memory is below threshold ({{ memory_threshold }}%).
+      System is healthy.
+
+  when:
+    - memory_after.stdout | float <= memory_threshold
+
+- name: Display Final Summary
+  debug:
+    msg:
+      - "Host: {{ inventory_hostname }}"
+      - "Memory Before: {{ memory_before.stdout | trim }}%"
+      - "Memory After: {{ memory_after.stdout | trim }}%"
+      - "Threshold: {{ memory_threshold }}%"
+      - "Remediation Attempts: {{ remediation_attempt_count | default(0) }}"
+      - "Status: {{ 'AUTO-REMEDIATED' if (memory_after.stdout | float <= memory_threshold) else 'INVESTIGATION REQUIRED' }}"
