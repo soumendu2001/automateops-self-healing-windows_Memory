@@ -25,7 +25,7 @@
     
     $ProcessThresholdMB = {{ process_memory_threshold_mb }}
 
-    $proc = Get-Process |
+    $proc = Get-Process |  
       Sort-Object WS -Descending |
       Where-Object {
           $_.Name -notin $protected -and
@@ -60,10 +60,10 @@
       "sqlservr",
       "explorer"
     )
-
+    $ProcessThresholdMB = {{ process_memory_threshold_mb }}
     $proc = Get-Process |
       Sort-Object WS -Descending |
-      Where-Object { $_.Name -notin $protected and ($_.WS / 1MB) -gt $ProcessThresholdMB} |
+      Where-Object { $_.Name -notin $protected -and ($_.WS / 1MB) -gt $ProcessThresholdMB} |
       Select-Object -First 1
 
     if ($proc) {
