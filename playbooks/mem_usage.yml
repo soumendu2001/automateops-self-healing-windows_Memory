@@ -6,7 +6,7 @@
   vars:
     memory_threshold: 20
     max_remediation_attempts: 5
-    process_memory_threshold_mb: 500
+    process_memory_threshold_mb: 100
 
     protected_processes:
       - System
