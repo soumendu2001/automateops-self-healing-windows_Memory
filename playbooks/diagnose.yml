@@ -7,7 +7,7 @@
     $free  = $os.FreePhysicalMemory
 
     $used = $total - $free
-    $usage = [math\]::Round(($used / $total) * 100,2)
+    $usage = [math]::Round(($used / $total) * 100,2)
 
     Write-Output $usage
   register: memory_before
