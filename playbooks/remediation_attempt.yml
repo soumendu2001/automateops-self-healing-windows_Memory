@@ -28,7 +28,7 @@
     $proc = Get-Process |
       Sort-Object WS -Descending |
       Where-Object {
-          $_.Name -notin $protected -and
+          $_.Name -not in $protected -and
           ($_.WS / 1MB) -gt $ProcessThresholdMB
       } |
       Select-Object -First 1 
