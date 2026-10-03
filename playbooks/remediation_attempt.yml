@@ -21,6 +21,8 @@
       "MsMpEng",
       "sqlservr",
       "explorer"
+      "WindowsTerminal"
+      "StartMenuExperienceHost"
     )
     
     $ProcessThresholdMB = {{ process_memory_threshold_mb }}
