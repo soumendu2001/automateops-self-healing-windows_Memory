@@ -8,7 +8,7 @@
 
     $used = $total - $free
 
-    [math]::Round(($used / $totall) * 100,2)
+    [math]::Round(($used / $total) * 100,2)
   register: memory_after
 
 - name: Display Memory After Remediation
