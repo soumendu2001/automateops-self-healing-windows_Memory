@@ -20,8 +20,8 @@
       "winlogon",
       "MsMpEng",
       "sqlservr",
-      "explorer"
-      "WindowsTerminal"
+      "explorer",
+      "WindowsTerminal",
       "StartMenuExperienceHost"
     )
     
@@ -60,7 +60,9 @@
       "winlogon",
       "MsMpEng",
       "sqlservr",
-      "explorer"
+      "explorer",
+      "WindowsTerminal",
+      "StartMenuExperienceHost"
     )
     $ProcessThresholdMB = {{ process_memory_threshold_mb }}
     $proc = Get-Process |
