@@ -29,7 +29,7 @@
       Sort-Object WS -Descending |
       Where-Object {
           $_.Name -notin $protected -and
-          $_.WS / 1MB) -gt $ProcessThresholdMB
+          ($_.WS / 1MB) -gt $ProcessThresholdMB
       } |
       Select-Object -First 1 
 
@@ -63,7 +63,7 @@
 
     $proc = Get-Process |
       Sort-Object WS -Descending |
-      Where-Object { $_.Name -notin $protected } |
+      Where-Object { $_.Name -notin $protected and ($_.WS / 1MB) -gt $ProcessThresholdMB} |
       Select-Object -First 1
 
     if ($proc) {
