@@ -10,6 +10,8 @@
 
     protected_processes:
       - System
+      - WindowsTerminal
+      - StartMenuExperienceHost
       - Idle
       - svchost
       - lsass
