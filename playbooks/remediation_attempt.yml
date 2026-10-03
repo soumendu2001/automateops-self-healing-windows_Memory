@@ -95,7 +95,7 @@
 
     $used = $total - $free
 
-    [math]::Round(($used / $total) * 100,22)
+    [math]::Round(($used / $total) * 100,2)
   register: memory_check
 
 - name: Display Current Memory
