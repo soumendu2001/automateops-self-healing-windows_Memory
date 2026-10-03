@@ -43,3 +43,19 @@
   when:
     - not remediation_complete
     - current_memory | float > memory_threshold
+
+- name: Remediation Attempt 6
+  include_tasks: remediation_attempt.yml
+  vars:
+    attempt_no: 6
+  when:
+    - not remediation_complete
+    - current_memory | float > memory_threshold
+
+- name: Remediation Attempt 7
+  include_tasks: remediation_attempt.yml
+  vars:
+    attempt_no: 7
+  when:
+    - not remediation_complete
+    - current_memory | float > memory_threshold
